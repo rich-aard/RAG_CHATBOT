@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Virtual environment
+.venv/
+
+# Environment variables
+.env
+.env.*
+
+# ChromaDB / vector store data
+chroma_db/
+*.sqlite3
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Temp / OS files
+.DS_Store
+Thumbs.db
+*.tmp
+
+# IDEs
+.vscode/
+.idea/
