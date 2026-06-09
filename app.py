@@ -6,21 +6,19 @@ from src.vectorstore import load_pdfs, build_vectorstore, split_documents
 import uuid
 
 # streamlit
-st.title("[⌬RY] Conversation RAG with PDF and chat history")
+st.title("[⌬RXZ.] Conversation RAG with PDF and chat history")
 st.write("Upload PDF's and query their content.")
 
 # groq key
 groq_key = st.secrets.get("GROQ_API_KEY", "") if hasattr(st, "secrets") else ""
-google_key = st.secrets.get("GOOGLE_API_KEY", "") if hasattr(st, "secrets") else ""
+
 
 if not groq_key:
     groq_key = st.text_input("Enter your GROQ API KEY: ", type="password")
-if not google_key:
-    google_key = st.text_input("Enter your GOOGLE API KEY: ", type="password")
 
-if groq_key and google_key:
+if groq_key:
     llm = get_llm(api_key=groq_key)
-    embeddings = get_embeddings(google_api_key=google_key)
+    embeddings = get_embeddings()
 
     if "session_id" not in st.session_state:
         st.session_state.session_id = str(uuid.uuid4())
@@ -39,11 +37,7 @@ if groq_key and google_key:
         documents = load_pdfs(uploaded_files)
         doc_split = split_documents(documents)
 
-        vectorstore = build_vectorstore(
-            chunks_hash=file_key, chunks=doc_split, google_api_key=google_key
-        )
-        query_embeddings = get_embeddings(google_api_key=google_key)
-        vectorstore.embedding_function = query_embeddings
+        vectorstore = build_vectorstore(chunks_hash=file_key, chunks=doc_split)
 
         retriever = vectorstore.as_retriever(
             search_type="similarity", search_kwargs={"k": 4}
