@@ -46,7 +46,7 @@ if groq_key and google_key:
         vectorstore.embedding_function = query_embeddings
 
         retriever = vectorstore.as_retriever(
-            search_type="mmr", search_kwargs={"k": 4, "fetch_k": 12}
+            search_type="similarity", search_kwargs={"k": 4}
         )
 
         rag_chain = build_rag_chain(_llm=llm, _retriever=retriever)
