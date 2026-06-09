@@ -10,11 +10,17 @@ st.title("[⌬RY] Conversation RAG with PDF and chat history")
 st.write("Upload PDF's and query their content.")
 
 # groq key
-api_key = st.text_input("Enter your GROQ API KEY: ", type="password")
+groq_key = st.secrets.get("GROQ_API_KEY", "") if hasattr(st, "secrets") else ""
+google_key = st.secrets.get("GOOGLE_API_KEY", "") if hasattr(st, "secrets") else ""
 
-if api_key:
-    llm = get_llm(api_key=api_key)
-    embeddings = get_embeddings()
+if not groq_key:
+    groq_key = st.text_input("Enter your GROQ API KEY: ", type="password")
+if not google_key:
+    google_key = st.text_input("Enter your GOOGLE API KEY: ", type="password")
+
+if groq_key and google_key:
+    llm = get_llm(api_key=groq_key)
+    embeddings = get_embeddings(google_api_key=google_key)
 
     if "session_id" not in st.session_state:
         st.session_state.session_id = str(uuid.uuid4())
@@ -70,4 +76,4 @@ if api_key:
                     st.divider()
 
 else:
-    st.warning("Please enter your GROQ API KEY.")
+    st.warning("Please enter both your GROQ and GOOGLE API keys.")

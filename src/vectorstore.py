@@ -1,5 +1,5 @@
 from langchain_community.document_loaders import PyPDFLoader
-from langchain_chroma import Chroma
+from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 import tempfile
 import streamlit as st
@@ -32,4 +32,4 @@ def split_documents(documents):
 
 @st.cache_resource(show_spinner="Building vectorstore...")
 def build_vectorstore(chunks_hash, chunks, _embeddings):
-    return Chroma.from_documents(documents=chunks, embedding=_embeddings)
+    return FAISS.from_documents(documents=chunks, embedding=_embeddings)
