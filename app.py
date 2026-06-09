@@ -57,12 +57,14 @@ if groq_key and google_key:
 
         user_input = st.chat_input("Query: ")
 
-        if user_input:
+        if user_input and user_input.strip():
+            cleaned_input = user_input.strip()
+
             with st.chat_message("user"):
-                st.markdown(user_input)
+                st.markdown(cleaned_input)
 
             response = conversation_rag_chain.invoke(
-                {"input": user_input},
+                {"input": cleaned_input},
                 config={"configurable": {"session_id": session_id}},
             )
 

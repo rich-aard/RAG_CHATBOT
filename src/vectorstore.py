@@ -35,6 +35,7 @@ def split_documents(documents):
 @st.cache_resource(show_spinner="Building vectorstore...")
 def build_vectorstore(chunks_hash, chunks, google_api_key):
     embeddings = GoogleGenerativeAIEmbeddings(
-        model="models/gemini-embedding-001", google_api_key=google_api_key
+        model="models/gemini-embedding-001", google_api_key=google_api_key,
+        task_type="retrieval_document"
     )
     return FAISS.from_documents(documents=chunks, embedding=embeddings)
