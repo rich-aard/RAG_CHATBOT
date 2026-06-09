@@ -39,7 +39,7 @@ if groq_key and google_key:
         documents = load_pdfs(uploaded_files)
         doc_split = split_documents(documents)
         vectorstore = build_vectorstore(
-            chunks_hash=file_key, chunks=doc_split, _embeddings=embeddings
+            chunks_hash=file_key, chunks=doc_split, google_api_key=google_key
         )
         retriever = vectorstore.as_retriever(
             search_type="mmr", search_kwargs={"k": 4, "fetch_k": 12}
