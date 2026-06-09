@@ -9,5 +9,5 @@ def get_llm(api_key: str):
 @st.cache_resource
 def get_embeddings(google_api_key: str):
     return GoogleGenerativeAIEmbeddings(
-        model="models/text-embedding-004", google_api_key=google_api_key
+        model="models/gemini-embedding-001", google_api_key=google_api_key
     )
